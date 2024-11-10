@@ -10,7 +10,7 @@ public class GameProgress {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Username user;
 
     private String animalType;
 
@@ -26,11 +26,11 @@ public class GameProgress {
         this.id = id;
     }
 
-    public User getUser() {
+    public Username getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Username user) {
         this.user = user;
     }
 

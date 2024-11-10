@@ -2,9 +2,10 @@ package ac.th.fearfreeanimals.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class User {
+public class Username {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +33,7 @@ public class User {
     private List<GameProgress> gameProgresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<RewardRedemption> rewardRedemptions;
 
     public Long getId() {
