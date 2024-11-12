@@ -2,9 +2,9 @@ package ac.th.fearfreeanimals.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "users")
 public class Username {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,25 +16,31 @@ public class Username {
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role; // Enum (general, patient)
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
     private String accessCode;
-
     private Integer fearLevel;
-
     private Integer coins;
 
     // Relationships
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Assessment> assessments;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GameProgress> gameProgresses;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RewardRedemption> rewardRedemptions;
+
+    public Username() {}
+
+    public Username(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     public Long getId() {
         return id;
@@ -116,5 +122,5 @@ public class Username {
         this.rewardRedemptions = rewardRedemptions;
     }
 
-    // Getters and Setters
+    // Getters and Setters...
 }

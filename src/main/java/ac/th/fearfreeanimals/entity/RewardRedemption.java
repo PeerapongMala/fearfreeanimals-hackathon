@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "reward_redemptions")
 public class RewardRedemption {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +19,14 @@ public class RewardRedemption {
     private Reward reward;
 
     private LocalDateTime redeemedAt;
+
+    public RewardRedemption() {}
+
+    public RewardRedemption(Username user, Reward reward, LocalDateTime redeemedAt) {
+        this.user = user;
+        this.reward = reward;
+        this.redeemedAt = redeemedAt;
+    }
 
     public Long getId() {
         return id;
@@ -51,5 +60,5 @@ public class RewardRedemption {
         this.redeemedAt = redeemedAt;
     }
 
-    // Getters and Setters
+    // Getters and Setters...
 }

@@ -1,11 +1,17 @@
+CREATE TABLE roles (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL
+);
+
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role VARCHAR(20) NOT NULL,
+    role_id BIGINT NOT NULL,
     access_code VARCHAR(50),
     fear_level INT,
-    coins INT
+    coins INT,
+    FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
 CREATE TABLE assessments (
@@ -25,22 +31,13 @@ CREATE TABLE game_progress (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE coins (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    balance INT,
-    last_updated TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
 CREATE TABLE rewards (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
+    description TEXT NOT NULL,
     coin_cost INT NOT NULL
 );
-
-CREATE TABLE reward_redemption (
+CREATE TABLE reward_redemptions (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     reward_id BIGINT NOT NULL,
