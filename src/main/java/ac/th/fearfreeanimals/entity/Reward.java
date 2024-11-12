@@ -3,16 +3,28 @@ package ac.th.fearfreeanimals.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "rewards")
 public class Reward {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private Integer coinCost;
+
+    public Reward() {}
+
+    public Reward(String name, String description, Integer coinCost) {
+        this.name = name;
+        this.description = description;
+        this.coinCost = coinCost;
+    }
 
     public Long getId() {
         return id;
@@ -46,5 +58,5 @@ public class Reward {
         this.coinCost = coinCost;
     }
 
-    // Getters and Setters
+    // Getters and Setters...
 }
