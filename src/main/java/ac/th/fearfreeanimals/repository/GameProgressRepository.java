@@ -1,0 +1,9 @@
+package ac.th.fearfreeanimals.repository;
+
+import ac.th.fearfreeanimals.entity.GameProgress;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface GameProgressRepository extends JpaRepository<GameProgress, Long> {
+}
