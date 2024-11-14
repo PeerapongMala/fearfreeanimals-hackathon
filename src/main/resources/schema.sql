@@ -52,4 +52,13 @@ CREATE TABLE reward_redemptions (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (reward_id) REFERENCES rewards(id) ON DELETE CASCADE
 );
-ALTER TABLE users MODIFY COLUMN access_code VARCHAR(10) COMMENT 'Access Code รูปแบบสั้น เช่น FFANM001';
+--ALTER TABLE users MODIFY COLUMN access_code VARCHAR(10) COMMENT 'Access Code รูปแบบสั้น เช่น FFANM001';
+-- หากคอลัมน์ยังไม่ถูกสร้างหรือไม่ได้ตั้งค่า COMMENT ให้ลองใช้คำสั่งนี้
+
+-- 1. เปลี่ยนชื่อและเพิ่มคำอธิบาย
+ALTER TABLE users ALTER COLUMN access_code SET DATA TYPE VARCHAR(10);
+-- ถ้าคุณต้องการเพิ่ม COMMENT ให้กับคอลัมน์ในฐานข้อมูล H2
+--COMMENT ON COLUMN users.access_code IS 'Access Code FFANM001';
+
+-- หากต้องการเพิ่มคอลัมน์ใหม่ก็สามารถทำได้เช่นเดียวกัน
+-- ALTER TABLE users ADD COLUMN access_code VARCHAR(10) COMMENT 'Access Code FFANM001';

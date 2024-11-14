@@ -3,21 +3,38 @@ package ac.th.fearfreeanimals.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "game_progress")
 public class GameProgress {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private Username user;
 
-    private String animalType;
+    @Column(nullable = false)
+    private int currentLevel;
 
-    private Integer currentLevel;
+    @Column(nullable = false)
+    private boolean completed;
 
-    private Boolean completed;
+    @Column(name = "animal_type")
+    private String animalType;  // Ensure this field exists and matches the query
 
+    // Default constructor
+    public GameProgress() {}
+
+    // Constructor with user
+    public GameProgress(Username user) {
+        this.user = user;
+        this.currentLevel = 1;  // Default starting level
+        this.completed = false; // Default status
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -34,29 +51,26 @@ public class GameProgress {
         this.user = user;
     }
 
-    public String getAnimalType() {
-        return animalType;
-    }
-
-    public void setAnimalType(String animalType) {
-        this.animalType = animalType;
-    }
-
-    public Integer getCurrentLevel() {
+    public int getCurrentLevel() {
         return currentLevel;
     }
 
-    public void setCurrentLevel(Integer currentLevel) {
+    public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
     }
 
-    public Boolean getCompleted() {
+    public boolean isCompleted() {
         return completed;
     }
 
-    public void setCompleted(Boolean completed) {
+    public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+    public String getAnimalType() {
+        return animalType;  // Getter for animalType
+    }
 
-    // Getters and Setters
+    public void setAnimalType(String animalType) {
+        this.animalType = animalType;  // Setter for animalType
+    }
 }
