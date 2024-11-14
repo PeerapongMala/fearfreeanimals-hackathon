@@ -2,7 +2,6 @@ package ac.th.fearfreeanimals.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -22,11 +21,15 @@ public class Username {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @Column(name = "access_code")
     private String accessCode;
+
+    @Column(name = "fear_level")
     private Integer fearLevel;
+
+    @Column(name = "coins")
     private Integer coins;
 
-    // Relationships
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Assessments> assessments;
@@ -46,6 +49,8 @@ public class Username {
         this.password = password;
         this.role = role;
     }
+
+    // Getters and Setters...
 
     public Long getId() {
         return id;
@@ -126,6 +131,4 @@ public class Username {
     public void setRewardRedemptions(List<RewardRedemption> rewardRedemptions) {
         this.rewardRedemptions = rewardRedemptions;
     }
-
-    // Getters and Setters...
 }

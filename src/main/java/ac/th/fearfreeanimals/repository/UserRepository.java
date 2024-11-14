@@ -4,7 +4,6 @@ import ac.th.fearfreeanimals.entity.Username;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<Username, Long> {
@@ -15,4 +14,6 @@ public interface UserRepository extends JpaRepository<Username, Long> {
     // Check if a username exists
     boolean existsByUsername(String username);
 
+    // Count patients (role = PATIENT)
+    long countByRoleName(String roleName);
 }
