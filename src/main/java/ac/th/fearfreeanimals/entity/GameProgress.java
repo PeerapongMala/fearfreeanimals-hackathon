@@ -12,13 +12,10 @@ public class GameProgress {
     private Long id;
 
     @ManyToOne
-<<<<<<< HEAD
+
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-=======
-    @JoinColumn(name = "user_id")
-    private Username user;
->>>>>>> 84e8640ae2fe19bcca8f00116fa9f8842f9f54b8
+
 
     @Column(nullable = false)
     private int currentLevel;
@@ -29,7 +26,6 @@ public class GameProgress {
     @Column(name = "animal_type")
     private String animalType;  // Ensure this field exists and matches the query
 
-<<<<<<< HEAD
     public GameProgress() {}
 
     public GameProgress(User user, String animalType, Integer currentLevel, Boolean completed) {
@@ -39,19 +35,7 @@ public class GameProgress {
         this.completed = completed;
     }
 
-=======
-    // Default constructor
-    public GameProgress() {}
 
-    // Constructor with user
-    public GameProgress(Username user) {
-        this.user = user;
-        this.currentLevel = 1;  // Default starting level
-        this.completed = false; // Default status
-    }
-
-    // Getters and Setters
->>>>>>> 84e8640ae2fe19bcca8f00116fa9f8842f9f54b8
     public Long getId() {
         return id;
     }

@@ -9,22 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-<<<<<<<< HEAD:src/main/java/ac/th/fearfreeanimals/controller/RewardController.java
-@RequestMapping("/rewards")
-public class RewardController {
-========
+
 @RequestMapping("/reward")
 public class Reward {
->>>>>>>> 84e8640ae2fe19bcca8f00116fa9f8842f9f54b8:src/main/java/ac/th/fearfreeanimals/controller/Reward.java
-
     private final RewardRedemptionRepository rewardRedemptionRepository;
 
     @Autowired
-<<<<<<<< HEAD:src/main/java/ac/th/fearfreeanimals/controller/RewardController.java
-    public RewardController(RewardRedemptionRepository rewardRedemptionRepository) {
-========
     public Reward(RewardRedemptionRepository rewardRedemptionRepository) {
->>>>>>>> 84e8640ae2fe19bcca8f00116fa9f8842f9f54b8:src/main/java/ac/th/fearfreeanimals/controller/Reward.java
         this.rewardRedemptionRepository = rewardRedemptionRepository;
     }
 
