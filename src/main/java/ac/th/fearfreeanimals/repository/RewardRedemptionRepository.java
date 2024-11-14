@@ -1,7 +1,6 @@
 package ac.th.fearfreeanimals.repository;
 
 import ac.th.fearfreeanimals.controller.Reward;
-import ac.th.fearfreeanimals.entity.GameProgress;
 import ac.th.fearfreeanimals.entity.RewardRedemption;
 
 import java.util.Optional;

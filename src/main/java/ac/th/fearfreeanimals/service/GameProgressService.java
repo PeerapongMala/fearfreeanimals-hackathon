@@ -19,7 +19,6 @@ public class GameProgressService {
         this.userRepository = userRepository;
     }
 
-    // Update or create game progress for the user
     public GameProgress updateProgress(Long userId, int currentLevel) {
         // Find the user by userId
         User user = userRepository.findById(userId)
@@ -28,7 +27,8 @@ public class GameProgressService {
         // Get the existing game progress or create a new one
         GameProgress gameProgress = gameProgressRepository.findByUserId(userId)
                 .orElseGet(() -> {
-                    GameProgress newProgress = new GameProgress(user);
+                    GameProgress newProgress = new GameProgress();
+                    newProgress.setUser(user);
                     newProgress.setCurrentLevel(1);  // Default starting level
                     newProgress.setCompleted(false);  // Set default completed status
                     return newProgress;
@@ -48,7 +48,7 @@ public class GameProgressService {
 
         return gameProgress;
     }
-    // Get game progress by userId
+
     public GameProgress getGameProgress(Long userId) {
         return gameProgressRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Game progress not found for userId " + userId));
