@@ -60,7 +60,8 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
         Role role = roleRepository.findByName(userDetails.getRole().getName())
-                .orElseThrow(() -> new RuntimeException("Role not found: " + userDetails.getRole().getName()));
+    .orElseThrow(() -> new RuntimeException("Role not found: " + userDetails.getRole().getName()));
+
 
         user.setUsername(userDetails.getUsername());
         user.setPassword(userDetails.getPassword());
@@ -68,6 +69,7 @@ public class UserController {
         user.setAccessCode(userDetails.getAccessCode());
         user.setFearLevel(userDetails.getFearLevel());
         user.setCoins(userDetails.getCoins());
+
 
         User updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
