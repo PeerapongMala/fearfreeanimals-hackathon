@@ -5,20 +5,31 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "game_progress")
 public class GameProgress {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+<<<<<<< HEAD
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+=======
+    @JoinColumn(name = "user_id")
+    private Username user;
+>>>>>>> 84e8640ae2fe19bcca8f00116fa9f8842f9f54b8
 
-    private String animalType;
+    @Column(nullable = false)
+    private int currentLevel;
 
-    private Integer currentLevel;
+    @Column(nullable = false)
+    private boolean completed;
 
-    private Boolean completed;
+    @Column(name = "animal_type")
+    private String animalType;  // Ensure this field exists and matches the query
 
+<<<<<<< HEAD
     public GameProgress() {}
 
     public GameProgress(User user, String animalType, Integer currentLevel, Boolean completed) {
@@ -28,6 +39,19 @@ public class GameProgress {
         this.completed = completed;
     }
 
+=======
+    // Default constructor
+    public GameProgress() {}
+
+    // Constructor with user
+    public GameProgress(Username user) {
+        this.user = user;
+        this.currentLevel = 1;  // Default starting level
+        this.completed = false; // Default status
+    }
+
+    // Getters and Setters
+>>>>>>> 84e8640ae2fe19bcca8f00116fa9f8842f9f54b8
     public Long getId() {
         return id;
     }
@@ -44,29 +68,26 @@ public class GameProgress {
         this.user = user;
     }
 
-    public String getAnimalType() {
-        return animalType;
-    }
-
-    public void setAnimalType(String animalType) {
-        this.animalType = animalType;
-    }
-
-    public Integer getCurrentLevel() {
+    public int getCurrentLevel() {
         return currentLevel;
     }
 
-    public void setCurrentLevel(Integer currentLevel) {
+    public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
     }
 
-    public Boolean getCompleted() {
+    public boolean isCompleted() {
         return completed;
     }
 
-    public void setCompleted(Boolean completed) {
+    public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+    public String getAnimalType() {
+        return animalType;  // Getter for animalType
+    }
 
-    // Getters and Setters
+    public void setAnimalType(String animalType) {
+        this.animalType = animalType;  // Setter for animalType
+    }
 }
