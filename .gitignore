@@ -30,11 +30,4 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/java/ac/th/fearfreeanimals/controller/Reward.java
-src/main/java/ac/th/fearfreeanimals/controller/RewardController.java
-src/main/java/ac/th/fearfreeanimals/controller/RewardRedemptionController.java
-src/main/java/ac/th/fearfreeanimals/entity/GameProgress.java
-src/main/java/ac/th/fearfreeanimals/repository/RewardRedemptionRepository.java
-src/main/java/ac/th/fearfreeanimals/repository/UserRepository.java
-src/main/java/ac/th/fearfreeanimals/service/GameProgressService.java
-src/main/resources/schema.sql
+
