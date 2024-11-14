@@ -11,7 +11,7 @@ public class Coins {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Username user;
+    private User user;
 
     private Integer balance;
 
@@ -25,11 +25,11 @@ public class Coins {
         this.id = id;
     }
 
-    public Username getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Username user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

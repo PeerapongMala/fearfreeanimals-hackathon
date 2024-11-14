@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reward-redemptions")
-public class RewardRedemptionController {
+@RequestMapping("/rewards")
+public class RewardController {
 
     private final RewardRedemptionRepository rewardRedemptionRepository;
 
     @Autowired
-    public RewardRedemptionController(RewardRedemptionRepository rewardRedemptionRepository) {
+    public RewardController(RewardRedemptionRepository rewardRedemptionRepository) {
         this.rewardRedemptionRepository = rewardRedemptionRepository;
     }
 

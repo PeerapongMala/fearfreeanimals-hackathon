@@ -1,55 +1,68 @@
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS reward_redemptions;
+DROP TABLE IF EXISTS rewards;
+DROP TABLE IF EXISTS game_progress;
+DROP TABLE IF EXISTS assessments;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
+
+-- Table for roles
 CREATE TABLE roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL COMMENT 'ชื่อของ role เช่น GENERAL หรือ PATIENT'
+    name VARCHAR(50) UNIQUE NOT NULL COMMENT 'Role name (e.g., GENERAL, PATIENT)'
 );
 
+-- Table for users
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL COMMENT 'ชื่อผู้ใช้งานในระบบ',
-    password VARCHAR(255) NOT NULL COMMENT 'รหัสผ่าน',
-    role_id BIGINT NOT NULL COMMENT 'อ้างอิง role_id',
-    access_code VARCHAR(50) DEFAULT NULL COMMENT 'โค้ดสำหรับผู้ป่วยที่ได้รับจากหมอ',
-    fear_level INT DEFAULT 0 COMMENT 'ระดับความกลัว',
-    coins INT DEFAULT 0 COMMENT 'จำนวนเหรียญที่มี',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'วันที่สร้างผู้ใช้',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'วันที่แก้ไขล่าสุด',
+    username VARCHAR(50) UNIQUE NOT NULL COMMENT 'Username',
+    password VARCHAR(255) NOT NULL COMMENT 'Password',
+    role_id BIGINT NOT NULL COMMENT 'Foreign key for role',
+    access_code VARCHAR(10) DEFAULT NULL COMMENT 'Short access code for patients',
+    fear_level INT DEFAULT 0 COMMENT 'Fear level',
+    coins INT DEFAULT 0 COMMENT 'Coins for rewards',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Account creation date',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last update',
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
+-- Table for assessments
 CREATE TABLE assessments (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL COMMENT 'อ้างอิงถึงผู้ใช้งานที่ทำแบบประเมิน',
-    score INT COMMENT 'คะแนนที่ได้จากการประเมิน',
-    fear_percentage DOUBLE COMMENT 'เปอร์เซ็นต์ความกลัวที่คำนวณได้',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'วันที่ทำแบบประเมิน',
+    user_id BIGINT NOT NULL COMMENT 'Foreign key to user',
+    score INT COMMENT 'Assessment score',
+    fear_percentage DOUBLE COMMENT 'Fear percentage',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Assessment date',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Table for game progress
 CREATE TABLE game_progress (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL COMMENT 'อ้างอิงถึงผู้ใช้งาน',
-    animal_type VARCHAR(50) COMMENT 'ประเภทสัตว์ที่ผู้เล่นกำลังเล่น',
-    current_level INT DEFAULT 1 COMMENT 'เลเวลปัจจุบันของผู้เล่น',
-    completed BOOLEAN DEFAULT FALSE COMMENT 'สถานะว่าผู้เล่นผ่านเกมหรือยัง',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'วันที่อัพเดตล่าสุด',
+    user_id BIGINT NOT NULL COMMENT 'Foreign key to user',
+    animal_type VARCHAR(50) COMMENT 'Animal type the user interacts with',
+    current_level INT DEFAULT 1 COMMENT 'Current level in game',
+    completed BOOLEAN DEFAULT FALSE COMMENT 'Game completion status',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last updated',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Table for rewards
 CREATE TABLE rewards (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL COMMENT 'ชื่อรางวัล',
-    description TEXT NOT NULL COMMENT 'รายละเอียดของรางวัล',
-    coin_cost INT NOT NULL COMMENT 'จำนวนเหรียญที่ต้องใช้เพื่อแลก',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'วันที่สร้างรางวัล',
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'วันที่อัพเดตข้อมูลรางวัลล่าสุด'
+    name VARCHAR(255) NOT NULL COMMENT 'Reward name',
+    description TEXT NOT NULL COMMENT 'Reward description',
+    coin_cost INT NOT NULL COMMENT 'Coin cost for the reward',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Reward creation date',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last updated'
 );
 
+-- Table for reward redemptions
 CREATE TABLE reward_redemptions (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL COMMENT 'อ้างอิงถึงผู้ใช้งานที่แลกรางวัล',
-    reward_id BIGINT NOT NULL COMMENT 'อ้างอิงถึงรางวัลที่แลก',
-    redeemed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'วันที่แลกรางวัล',
+    user_id BIGINT NOT NULL COMMENT 'Foreign key to user',
+    reward_id BIGINT NOT NULL COMMENT 'Foreign key to reward',
+    redeemed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Redemption date',
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (reward_id) REFERENCES rewards(id) ON DELETE CASCADE
 );
-ALTER TABLE users MODIFY COLUMN access_code VARCHAR(10) COMMENT 'Access Code รูปแบบสั้น เช่น FFANM001';

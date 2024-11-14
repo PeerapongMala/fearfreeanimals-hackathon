@@ -3,6 +3,7 @@ package ac.th.fearfreeanimals.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "game_progress")
 public class GameProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -10,13 +11,22 @@ public class GameProgress {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Username user;
+    private User user;
 
     private String animalType;
 
     private Integer currentLevel;
 
     private Boolean completed;
+
+    public GameProgress() {}
+
+    public GameProgress(User user, String animalType, Integer currentLevel, Boolean completed) {
+        this.user = user;
+        this.animalType = animalType;
+        this.currentLevel = currentLevel;
+        this.completed = completed;
+    }
 
     public Long getId() {
         return id;
@@ -26,11 +36,11 @@ public class GameProgress {
         this.id = id;
     }
 
-    public Username getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Username user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

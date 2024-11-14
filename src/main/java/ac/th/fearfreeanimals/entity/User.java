@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
-public class Username {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,14 +21,14 @@ public class Username {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @Column(name = "access_code")
+    @Column(name = "access_code", unique = true)
     private String accessCode;
 
-    @Column(name = "fear_level")
-    private Integer fearLevel;
+    @Column(name = "fear_level", nullable = false)
+    private Integer fearLevel = 0;
 
-    @Column(name = "coins")
-    private Integer coins;
+    @Column(name = "coins", nullable = false)
+    private Integer coins = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -42,15 +42,13 @@ public class Username {
     @JsonIgnore
     private List<RewardRedemption> rewardRedemptions;
 
-    public Username() {}
+    public User() {}
 
-    public Username(String username, String password, Role role) {
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
-
-    // Getters and Setters...
 
     public Long getId() {
         return id;
@@ -131,4 +129,6 @@ public class Username {
     public void setRewardRedemptions(List<RewardRedemption> rewardRedemptions) {
         this.rewardRedemptions = rewardRedemptions;
     }
+
+    // Getters and Setters...
 }
