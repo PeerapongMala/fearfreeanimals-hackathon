@@ -3,7 +3,7 @@ package ac.th.fearfreeanimals.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class Assessment {
+public class Assessments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

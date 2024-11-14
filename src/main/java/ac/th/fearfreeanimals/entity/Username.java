@@ -3,6 +3,8 @@ package ac.th.fearfreeanimals.entity;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "users")
 public class Username {
@@ -26,12 +28,15 @@ public class Username {
 
     // Relationships
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Assessment> assessments;
+    @JsonIgnore
+    private List<Assessments> assessments;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<GameProgress> gameProgresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<RewardRedemption> rewardRedemptions;
 
     public Username() {}
@@ -98,11 +103,11 @@ public class Username {
         this.coins = coins;
     }
 
-    public List<Assessment> getAssessments() {
+    public List<Assessments> getAssessments() {
         return assessments;
     }
 
-    public void setAssessments(List<Assessment> assessments) {
+    public void setAssessments(List<Assessments> assessments) {
         this.assessments = assessments;
     }
 

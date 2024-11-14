@@ -16,12 +16,12 @@ INSERT INTO assessments (user_id, score, fear_percentage) VALUES
 -- Insert game progress
 INSERT INTO game_progress (user_id, animal_type, current_level, completed) VALUES
 (1, 'cat', 3, FALSE),
-(2, 'dog', 5, TRUE);
+(2, 'dog', 5, FALSE);
 
 -- Insert rewards
 INSERT INTO rewards (name, description, coin_cost) VALUES
-('Gift Card', 'A $10 gift card', 50),
-('T-Shirt', 'A branded T-shirt', 100);
+('Gift Card', 'A $10 gift card', 3),
+('T-Shirt', 'A branded T-shirt', 3);
 
 INSERT INTO reward_redemptions (user_id, reward_id, redeemed_at)
 VALUES
