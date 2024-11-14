@@ -69,6 +69,7 @@ public class UserController {
         user.setFearLevel(userDetails.getFearLevel());
         user.setCoins(userDetails.getCoins());
 
+
         User updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
     }
