@@ -60,7 +60,8 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
         Role role = roleRepository.findByName(userDetails.getRole().getName())
-                .orElseThrow(() -> new RuntimeException("Role not found: " + userDetails.getRole().getName()));
+    .orElseThrow(() -> new RuntimeException("Role not found: " + userDetails.getRole().getName()));
+
 
         user.setUsername(userDetails.getUsername());
         user.setPassword(userDetails.getPassword());
