@@ -1,7 +1,7 @@
 package ac.th.fearfreeanimals.controller;
 
 import ac.th.fearfreeanimals.entity.GameProgress;
-import ac.th.fearfreeanimals.entity.Username;
+
 import ac.th.fearfreeanimals.repository.GameProgressRepository;
 import ac.th.fearfreeanimals.repository.UserRepository;
 import ac.th.fearfreeanimals.service.GameProgressService;

@@ -1,7 +1,7 @@
 package ac.th.fearfreeanimals.service;
 
 import ac.th.fearfreeanimals.entity.GameProgress;
-import ac.th.fearfreeanimals.entity.Username;
+import ac.th.fearfreeanimals.entity.User;
 import ac.th.fearfreeanimals.repository.GameProgressRepository;
 import ac.th.fearfreeanimals.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class GameProgressService {
     // Update or create game progress for the user
     public GameProgress updateProgress(Long userId, int currentLevel) {
         // Find the user by userId
-        Username user = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
 
         // Get the existing game progress or create a new one
