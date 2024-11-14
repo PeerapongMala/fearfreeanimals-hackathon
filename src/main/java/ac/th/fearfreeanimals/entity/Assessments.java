@@ -3,18 +3,27 @@ package ac.th.fearfreeanimals.entity;
 import jakarta.persistence.*;
 
 @Entity
-public class Assessment {
+@Table(name = "assessments")
+public class Assessments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Username user;
+    private User user;
 
     private Integer score;
 
     private Double fearPercentage;
+
+    public Assessments() {}
+
+    public Assessments(User user, Integer score, Double fearPercentage) {
+        this.user = user;
+        this.score = score;
+        this.fearPercentage = fearPercentage;
+    }
 
     public Long getId() {
         return id;
@@ -24,11 +33,11 @@ public class Assessment {
         this.id = id;
     }
 
-    public Username getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Username user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

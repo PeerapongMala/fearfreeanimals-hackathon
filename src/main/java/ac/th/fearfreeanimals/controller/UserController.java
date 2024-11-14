@@ -1,10 +1,12 @@
 package ac.th.fearfreeanimals.controller;
 
-import ac.th.fearfreeanimals.entity.Username;
-import ac.th.fearfreeanimals.repository.UserRepository;
+import ac.th.fearfreeanimals.entity.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ac.th.fearfreeanimals.entity.Role;
+import ac.th.fearfreeanimals.repository.*;
 
 import java.util.List;
 
@@ -13,48 +15,61 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository; // เพิ่ม RoleRepository
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository; // Assign roleRepository
     }
 
     // Get all users
     @GetMapping
-    public ResponseEntity<List<Username>> getAllUsers() {
-        List<Username> users = userRepository.findAll();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userRepository.findAll();
         return ResponseEntity.ok(users);
     }
 
     // Create a new user
     @PostMapping
-    public ResponseEntity<Username> createUser(@RequestBody Username user) {
-        Username createdUser = userRepository.save(user);
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        // ค้นหา Role ในฐานข้อมูล
+        Role role = roleRepository.findByName(user.getRole().getName())
+                .orElseThrow(() -> new RuntimeException("Role not found: " + user.getRole().getName()));
+
+        // เซ็ต Role ที่ดึงมาใน user
+        user.setRole(role);
+
+        // บันทึก user
+        User createdUser = userRepository.save(user);
         return ResponseEntity.ok(createdUser);
     }
 
     // Get user by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Username> getUserById(@PathVariable Long id) {
-        Username user = userRepository.findById(id)
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + id));
         return ResponseEntity.ok(user);
     }
 
     // Update user by ID
     @PutMapping("/{id}")
-    public ResponseEntity<Username> updateUser(@PathVariable Long id, @RequestBody Username userDetails) {
-        Username user = userRepository.findById(id)
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+
+        Role role = roleRepository.findByName(userDetails.getRole().getName())
+                .orElseThrow(() -> new RuntimeException("Role not found: " + userDetails.getRole().getName()));
 
         user.setUsername(userDetails.getUsername());
         user.setPassword(userDetails.getPassword());
-        user.setRole(userDetails.getRole());
+        user.setRole(role); // อัปเดต Role ด้วย
         user.setAccessCode(userDetails.getAccessCode());
         user.setFearLevel(userDetails.getFearLevel());
         user.setCoins(userDetails.getCoins());
 
-        Username updatedUser = userRepository.save(user);
+        User updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);
     }
 

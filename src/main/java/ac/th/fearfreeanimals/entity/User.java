@@ -2,10 +2,11 @@ package ac.th.fearfreeanimals.entity;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
-public class Username {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,23 +21,30 @@ public class Username {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    @Column(name = "access_code", unique = true)
     private String accessCode;
-    private Integer fearLevel;
-    private Integer coins;
 
-    // Relationships
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Assessment> assessments;
+    @Column(name = "fear_level", nullable = false)
+    private Integer fearLevel = 0;
+
+    @Column(name = "coins", nullable = false)
+    private Integer coins = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Assessments> assessments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<GameProgress> gameProgresses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<RewardRedemption> rewardRedemptions;
 
-    public Username() {}
+    public User() {}
 
-    public Username(String username, String password, Role role) {
+    public User(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -98,11 +106,11 @@ public class Username {
         this.coins = coins;
     }
 
-    public List<Assessment> getAssessments() {
+    public List<Assessments> getAssessments() {
         return assessments;
     }
 
-    public void setAssessments(List<Assessment> assessments) {
+    public void setAssessments(List<Assessments> assessments) {
         this.assessments = assessments;
     }
 

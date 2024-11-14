@@ -12,7 +12,7 @@ public class RewardRedemption {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private Username user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "reward_id", nullable = false)
@@ -22,7 +22,7 @@ public class RewardRedemption {
 
     public RewardRedemption() {}
 
-    public RewardRedemption(Username user, Reward reward, LocalDateTime redeemedAt) {
+    public RewardRedemption(User user, Reward reward, LocalDateTime redeemedAt) {
         this.user = user;
         this.reward = reward;
         this.redeemedAt = redeemedAt;
@@ -36,11 +36,11 @@ public class RewardRedemption {
         this.id = id;
     }
 
-    public Username getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Username user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

@@ -1,47 +1,81 @@
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS reward_redemptions;
+DROP TABLE IF EXISTS rewards;
+DROP TABLE IF EXISTS game_progress;
+DROP TABLE IF EXISTS assessments;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
+
+-- Table for roles
 CREATE TABLE roles (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50) UNIQUE NOT NULL
+    name VARCHAR(50) UNIQUE NOT NULL COMMENT 'Role name (e.g., GENERAL, PATIENT)'
 );
 
+-- Table for users
 CREATE TABLE users (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role_id BIGINT NOT NULL,
-    access_code VARCHAR(50),
-    fear_level INT,
-    coins INT,
-    FOREIGN KEY (role_id) REFERENCES roles(id)
+    username VARCHAR(50) UNIQUE NOT NULL COMMENT 'Username',
+    password VARCHAR(255) NOT NULL COMMENT 'Password',
+    role_id BIGINT NOT NULL COMMENT 'Foreign key for role',
+    access_code VARCHAR(10) DEFAULT NULL COMMENT 'Short access code for patients',
+    fear_level INT DEFAULT 0 COMMENT 'Fear level',
+    coins INT DEFAULT 0 COMMENT 'Coins for rewards',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Account creation date',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last update',
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
 );
 
+-- Table for assessments
 CREATE TABLE assessments (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    score INT,
-    fear_percentage DOUBLE,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    user_id BIGINT NOT NULL COMMENT 'Foreign key to user',
+    score INT COMMENT 'Assessment score',
+    fear_percentage DOUBLE COMMENT 'Fear percentage',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Assessment date',
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Table for game progress
 CREATE TABLE game_progress (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    animal_type VARCHAR(50),
-    current_level INT,
-    completed BOOLEAN,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    user_id BIGINT NOT NULL COMMENT 'Foreign key to user',
+    animal_type VARCHAR(50) COMMENT 'Animal type the user interacts with',
+    current_level INT DEFAULT 1 COMMENT 'Current level in game',
+    completed BOOLEAN DEFAULT FALSE COMMENT 'Game completion status',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last updated',
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Table for rewards
 CREATE TABLE rewards (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    coin_cost INT NOT NULL
+    name VARCHAR(255) NOT NULL COMMENT 'Reward name',
+    description TEXT NOT NULL COMMENT 'Reward description',
+    coin_cost INT NOT NULL COMMENT 'Coin cost for the reward',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Reward creation date',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last updated'
 );
+
+-- Table for reward redemptions
 CREATE TABLE reward_redemptions (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    reward_id BIGINT NOT NULL,
-    redeemed_at TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (reward_id) REFERENCES rewards(id)
+    user_id BIGINT NOT NULL COMMENT 'Foreign key to user',
+    reward_id BIGINT NOT NULL COMMENT 'Foreign key to reward',
+    redeemed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Redemption date',
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (reward_id) REFERENCES rewards(id) ON DELETE CASCADE
 );
+<<<<<<< HEAD
+=======
+--ALTER TABLE users MODIFY COLUMN access_code VARCHAR(10) COMMENT 'Access Code รูปแบบสั้น เช่น FFANM001';
+-- หากคอลัมน์ยังไม่ถูกสร้างหรือไม่ได้ตั้งค่า COMMENT ให้ลองใช้คำสั่งนี้
+
+-- 1. เปลี่ยนชื่อและเพิ่มคำอธิบาย
+ALTER TABLE users ALTER COLUMN access_code SET DATA TYPE VARCHAR(10);
+-- ถ้าคุณต้องการเพิ่ม COMMENT ให้กับคอลัมน์ในฐานข้อมูล H2
+--COMMENT ON COLUMN users.access_code IS 'Access Code FFANM001';
+
+-- หากต้องการเพิ่มคอลัมน์ใหม่ก็สามารถทำได้เช่นเดียวกัน
+-- ALTER TABLE users ADD COLUMN access_code VARCHAR(10) COMMENT 'Access Code FFANM001';
+>>>>>>> 84e8640ae2fe19bcca8f00116fa9f8842f9f54b8
