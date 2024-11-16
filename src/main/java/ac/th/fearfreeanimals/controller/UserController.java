@@ -32,7 +32,20 @@ public class UserController {
 
     // Create a new user
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<User> createUsernormal(@RequestBody User user) {
+        // ค้นหา Role ในฐานข้อมูล
+        Role role = roleRepository.findByName(user.getRole().getName())
+                .orElseThrow(() -> new RuntimeException("Role not found: " + user.getRole().getName()));
+
+        // เซ็ต Role ที่ดึงมาใน user
+        user.setRole(role);
+
+        // บันทึก user
+        User createdUser = userRepository.save(user);
+        return ResponseEntity.ok(createdUser);
+    }
+     @PostMapping
+    public ResponseEntity<User> createUserdoctor(@RequestBody User user) {
         // ค้นหา Role ในฐานข้อมูล
         Role role = roleRepository.findByName(user.getRole().getName())
                 .orElseThrow(() -> new RuntimeException("Role not found: " + user.getRole().getName()));

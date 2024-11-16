@@ -18,14 +18,13 @@ public class RewardRedemption {
     @JoinColumn(name = "reward_id", nullable = false)
     private Reward reward;
 
+    @Column(nullable = false)
     private LocalDateTime redeemedAt;
 
-    public RewardRedemption() {}
-
-    public RewardRedemption(User user, Reward reward, LocalDateTime redeemedAt) {
+    public RewardRedemption(User user, Reward reward) {
         this.user = user;
         this.reward = reward;
-        this.redeemedAt = redeemedAt;
+        this.redeemedAt = LocalDateTime.now();
     }
 
     public Long getId() {

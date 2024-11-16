@@ -16,6 +16,12 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+    
+    @Column(nullable = false)
+private Boolean isDoctor = false;
+
+// Getter และ Setter
+
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
@@ -32,15 +38,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Assessments> assessments;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private List<GameProgress> gameProgresses;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<RewardRedemption> rewardRedemptions;
 
     public User() {}
 
@@ -106,14 +104,6 @@ public class User {
         this.coins = coins;
     }
 
-    public List<Assessments> getAssessments() {
-        return assessments;
-    }
-
-    public void setAssessments(List<Assessments> assessments) {
-        this.assessments = assessments;
-    }
-
     public List<GameProgress> getGameProgresses() {
         return gameProgresses;
     }
@@ -122,14 +112,5 @@ public class User {
         this.gameProgresses = gameProgresses;
     }
 
-    public List<RewardRedemption> getRewardRedemptions() {
-        return rewardRedemptions;
-    }
-
-    public void setRewardRedemptions(List<RewardRedemption> rewardRedemptions) {
-        this.rewardRedemptions = rewardRedemptions;
-    }
-
     // Getters and Setters...
-    
 }
