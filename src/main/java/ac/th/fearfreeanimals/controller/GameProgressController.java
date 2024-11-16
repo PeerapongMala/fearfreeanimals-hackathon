@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/game-progress")
 public class GameProgressController {
-    // ตรวจสอบ userId
-
 
     private final GameProgressRepository gameProgressRepository;
+
     private final GameProgressService gameProgressService;
+
     private final UserRepository userRepository;
+
     private final CoinsService coinsService;
+    
     private void validateUserId(Long userId) {
     if (!userRepository.existsById(userId)) {
         throw new RuntimeException("User with ID " + userId + " does not exist.");
