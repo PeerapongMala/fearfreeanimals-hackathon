@@ -17,11 +17,8 @@ public class User {
     @Column(nullable = false)
     private String password;
     
-    @Column(nullable = false)
-private Boolean isDoctor = false;
-
-// Getter และ Setter
-
+    @Column(name = "is_doctor", nullable = false)
+    private Boolean isDoctor = false;
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
@@ -35,6 +32,7 @@ private Boolean isDoctor = false;
 
     @Column(name = "coins", nullable = false)
     private Integer coins = 0;
+    
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -112,5 +110,12 @@ private Boolean isDoctor = false;
         this.gameProgresses = gameProgresses;
     }
 
-    // Getters and Setters...
+    public Boolean getIsDoctor() {
+        return isDoctor;
+    }
+
+    public void setIsDoctor(Boolean isDoctor) {
+        this.isDoctor = isDoctor;
+    }
+
 }

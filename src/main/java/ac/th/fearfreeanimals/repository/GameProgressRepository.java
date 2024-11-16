@@ -8,6 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface GameProgressRepository extends JpaRepository<GameProgress, Long> {
-
     Optional<GameProgress> findByUserId(Long userId);
 }

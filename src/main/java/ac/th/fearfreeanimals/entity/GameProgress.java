@@ -75,5 +75,13 @@ public class GameProgress {
         this.completed = completed;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     // Getters and setters
 }

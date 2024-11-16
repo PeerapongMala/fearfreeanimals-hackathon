@@ -1,12 +1,11 @@
 package ac.th.fearfreeanimals.controller;
 
 import ac.th.fearfreeanimals.entity.User;
-
+import ac.th.fearfreeanimals.entity.Role;
+import ac.th.fearfreeanimals.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ac.th.fearfreeanimals.entity.Role;
-import ac.th.fearfreeanimals.repository.*;
 
 import java.util.List;
 
@@ -15,12 +14,12 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository; // เพิ่ม RoleRepository
+    private final RoleRepository roleRepository;
 
     @Autowired
     public UserController(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository; // Assign roleRepository
+        this.roleRepository = roleRepository;
     }
 
     // Get all users
@@ -30,30 +29,30 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    // Create a new user
-    @PostMapping
-    public ResponseEntity<User> createUsernormal(@RequestBody User user) {
-        // ค้นหา Role ในฐานข้อมูล
-        Role role = roleRepository.findByName(user.getRole().getName())
-                .orElseThrow(() -> new RuntimeException("Role not found: " + user.getRole().getName()));
-
-        // เซ็ต Role ที่ดึงมาใน user
+    // Create a general user
+    @PostMapping("/general")
+    public ResponseEntity<User> createGeneralUser(@RequestBody User user) {
+        // Find the "GENERAL" role
+        Role role = roleRepository.findByName("GENERAL")
+                .orElseThrow(() -> new RuntimeException("Role GENERAL not found"));
+        
         user.setRole(role);
-
-        // บันทึก user
         User createdUser = userRepository.save(user);
         return ResponseEntity.ok(createdUser);
     }
-     @PostMapping
-    public ResponseEntity<User> createUserdoctor(@RequestBody User user) {
-        // ค้นหา Role ในฐานข้อมูล
-        Role role = roleRepository.findByName(user.getRole().getName())
-                .orElseThrow(() -> new RuntimeException("Role not found: " + user.getRole().getName()));
 
-        // เซ็ต Role ที่ดึงมาใน user
+    // Create a patient by doctor
+    @PostMapping("/patient")
+    public ResponseEntity<User> createPatientByDoctor(@RequestBody User user) {
+        // Find the "PATIENT" role
+        Role role = roleRepository.findByName("PATIENT")
+                .orElseThrow(() -> new RuntimeException("Role PATIENT not found"));
+
         user.setRole(role);
+        // Generate Access Code
+        String accessCode = "FFANM" + String.format("%03d", (userRepository.countByRoleName("PATIENT") + 1));
+        user.setAccessCode(accessCode);
 
-        // บันทึก user
         User createdUser = userRepository.save(user);
         return ResponseEntity.ok(createdUser);
     }
@@ -73,16 +72,14 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
         Role role = roleRepository.findByName(userDetails.getRole().getName())
-    .orElseThrow(() -> new RuntimeException("Role not found: " + userDetails.getRole().getName()));
-
+                .orElseThrow(() -> new RuntimeException("Role not found: " + userDetails.getRole().getName()));
 
         user.setUsername(userDetails.getUsername());
         user.setPassword(userDetails.getPassword());
-        user.setRole(role); // อัปเดต Role ด้วย
+        user.setRole(role);
         user.setAccessCode(userDetails.getAccessCode());
         user.setFearLevel(userDetails.getFearLevel());
         user.setCoins(userDetails.getCoins());
-
 
         User updatedUser = userRepository.save(user);
         return ResponseEntity.ok(updatedUser);

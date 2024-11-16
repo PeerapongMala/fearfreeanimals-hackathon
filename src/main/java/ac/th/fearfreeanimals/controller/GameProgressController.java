@@ -20,7 +20,17 @@ public class GameProgressController {
         return ResponseEntity.ok(progress);
     }
 
-    // อัปเดตข้อมูลความคืบหน้าเกม
+    // อัปเดตข้อมูลความคืบหน้าเกมพร้อมคำอธิบาย
+    @PostMapping("/{userId}/update")
+    public ResponseEntity<GameProgress> updateGameProgress(
+            @PathVariable Long userId,
+            @RequestParam Integer currentLevel,
+            @RequestParam String description) {
+        GameProgress progress = gameProgressService.updateGameProgress(userId, description, currentLevel);
+        return ResponseEntity.ok(progress);
+    }
+
+    // อัปเดตข้อมูลความคืบหน้าเกม (เฉพาะด่าน)
     @PutMapping("/{userId}")
     public ResponseEntity<GameProgress> updateProgress(
             @PathVariable Long userId,
