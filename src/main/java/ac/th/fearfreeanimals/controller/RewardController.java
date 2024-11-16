@@ -56,7 +56,7 @@ public class RewardController {
                 .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
     
         // ตั้งค่าผู้ใช้ใน RewardRedemption
-        rewardRedemption.setUser(user); // เปลี่ยนจาก userId เป็น user (ถ้ามี setter สำหรับ user)
+        rewardRedemption.setUser(user); 
     
         // บันทึกข้อมูลการแลกรางวัล
         RewardRedemption redeemed = rewardRedemptionRepository.save(rewardRedemption);

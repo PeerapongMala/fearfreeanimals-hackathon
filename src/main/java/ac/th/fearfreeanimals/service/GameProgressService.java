@@ -16,43 +16,45 @@ public class GameProgressService {
     @Autowired
     private UserRepository userRepository;
 
-    public GameProgress updateProgress(Long userId, int currentLevel) {
-        // ค้นหาผู้ใช้
+    public GameProgress createGameProgress(Long userId, GameProgress newProgress) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
+                .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
+        newProgress.setUser(user);
+        return gameProgressRepository.save(newProgress);
+    }
 
-        // ค้นหาความคืบหน้าเกมหรือสร้างใหม่
+    public GameProgress updateGameProgress(Long userId, GameProgress gameProgressDetails) {
         GameProgress gameProgress = gameProgressRepository.findByUserId(userId)
-                .orElseGet(() -> new GameProgress(user, null)); // null เพราะยังไม่มี Animal Type
+                .orElseThrow(() -> new RuntimeException("Game progress not found for user ID " + userId));
 
-        // อัปเดตข้อมูล
-        gameProgress.setCurrentLevel(currentLevel);
-        gameProgress.setCompleted(currentLevel == 10); // สมมติว่าด่าน 10 คือด่านสุดท้าย
-
-        // บันทึกข้อมูล
+        gameProgress.setCurrentLevel(gameProgressDetails.getCurrentLevel());
+        gameProgress.setAnimalType(gameProgressDetails.getAnimalType());
+        gameProgress.setCompleted(gameProgressDetails.getCompleted());
+        gameProgress.setDescription(gameProgressDetails.getDescription());
         return gameProgressRepository.save(gameProgress);
     }
 
-    public GameProgress updateGameProgress(Long userId, String description, Integer currentLevel) {
-        // ค้นหาผู้ใช้
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
-
-        // ค้นหาความคืบหน้าเกมหรือสร้างใหม่
+    public GameProgress nextLevel(Long userId) {
         GameProgress gameProgress = gameProgressRepository.findByUserId(userId)
-                .orElseGet(() -> new GameProgress(user, null)); // null เพราะยังไม่มี Animal Type
+                .orElseThrow(() -> new RuntimeException("Game progress not found for user ID " + userId));
 
-        // อัปเดตข้อมูล
-        gameProgress.setCurrentLevel(currentLevel);
-        gameProgress.setDescription(description); // อัปเดตคำอธิบาย
-        gameProgress.setCompleted(currentLevel == 10); // สมมติว่าด่าน 10 คือด่านสุดท้าย
+        int currentLevel = gameProgress.getCurrentLevel();
+        gameProgress.setCurrentLevel(currentLevel + 1);
 
-        // บันทึกข้อมูล
+        if (currentLevel == 10) {
+            // ไม่มีการเพิ่มเหรียญให้ผู้ป่วย
+            User user = gameProgress.getUser();
+            if (!user.getRole().getName().equals("PATIENT")) {
+                user.setCoins(user.getCoins() + 1);
+                userRepository.save(user);
+            }
+        }
+
         return gameProgressRepository.save(gameProgress);
     }
 
-    public GameProgress getProgress(Long userId) {
+    public GameProgress getGameProgress(Long userId) {
         return gameProgressRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Game progress not found for user id " + userId));
+                .orElseThrow(() -> new RuntimeException("Game progress not found for user ID " + userId));
     }
 }

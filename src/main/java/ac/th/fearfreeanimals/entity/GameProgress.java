@@ -1,6 +1,7 @@
 package ac.th.fearfreeanimals.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "game_progress")
@@ -10,30 +11,34 @@ public class GameProgress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
-    private String description; // ข้อความที่ผู้ป่วยสามารถใส่ในแต่ละด่าน
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User user; // เชื่อมโยงกับ User ที่เล่นเกมนี้
 
-    @Column(name = "animal_type")
-    private String animalType;
+    @Column(name = "animal_type", nullable = false)
+    private String animalType; // ประเภทสัตว์ที่เลือก เช่น งู, นก, แมว
 
     @Column(name = "current_level", nullable = false)
-    private Integer currentLevel = 1;
+    private Integer currentLevel = 1; // ด่านเริ่มต้นคือด่าน 1
 
     @Column(name = "completed", nullable = false)
-    private Boolean completed = false;
+    private Boolean completed = false; // ระบุสถานะว่าเกมเสร็จสมบูรณ์หรือยัง
 
-    public GameProgress() {}
+    @Column(columnDefinition = "TEXT")
+    private String description; // ข้อมูลคำอธิบาย (เฉพาะผู้ป่วย)
+
+    @Column(name = "last_updated", nullable = false)
+    private LocalDateTime lastUpdated = LocalDateTime.now(); // เก็บวันที่อัปเดตครั้งล่าสุด
+
+    public GameProgress() {
+    }
 
     public GameProgress(User user, String animalType) {
         this.user = user;
         this.animalType = animalType;
-        this.currentLevel = 1;
-        this.completed = false;
     }
+
+    // Getter และ Setter
 
     public Long getId() {
         return id;
@@ -56,6 +61,9 @@ public class GameProgress {
     }
 
     public void setAnimalType(String animalType) {
+        if (animalType == null || animalType.isEmpty()) {
+            throw new IllegalArgumentException("Animal type cannot be null or empty.");
+        }
         this.animalType = animalType;
     }
 
@@ -64,7 +72,11 @@ public class GameProgress {
     }
 
     public void setCurrentLevel(Integer currentLevel) {
+        if (currentLevel == null || currentLevel < 1) {
+            throw new IllegalArgumentException("Current level must be greater than or equal to 1.");
+        }
         this.currentLevel = currentLevel;
+        this.lastUpdated = LocalDateTime.now(); // อัปเดตเวลาเมื่อเปลี่ยนเลเวล
     }
 
     public Boolean getCompleted() {
@@ -73,6 +85,7 @@ public class GameProgress {
 
     public void setCompleted(Boolean completed) {
         this.completed = completed;
+        this.lastUpdated = LocalDateTime.now(); // อัปเดตเวลาเมื่อเปลี่ยนสถานะ
     }
 
     public String getDescription() {
@@ -80,8 +93,17 @@ public class GameProgress {
     }
 
     public void setDescription(String description) {
+        if (description != null && description.length() > 500) {
+            throw new IllegalArgumentException("Description exceeds the maximum length of 500 characters.");
+        }
         this.description = description;
     }
 
-    // Getters and setters
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
 }

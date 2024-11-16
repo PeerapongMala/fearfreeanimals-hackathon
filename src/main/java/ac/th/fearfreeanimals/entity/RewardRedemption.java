@@ -1,9 +1,12 @@
 package ac.th.fearfreeanimals.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 
 @Entity
+@Table(name = "RewardRedemptions")
 public class RewardRedemption {
 
     @Id
@@ -26,7 +29,7 @@ public class RewardRedemption {
     public RewardRedemption(User user, Reward reward) {
         this.user = user;
         this.reward = reward;
-        this.redeemedAt = LocalDateTime.now();
+        this.redeemedAt = LocalDateTime.now();}
 
     public Long getId() {
         return id;
