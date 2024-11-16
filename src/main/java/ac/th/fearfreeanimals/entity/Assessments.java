@@ -1,5 +1,7 @@
 package ac.th.fearfreeanimals.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +18,9 @@ public class Assessments {
     private Integer score;
 
     private Double fearPercentage;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     public Assessments() {}
 
@@ -55,6 +60,14 @@ public class Assessments {
 
     public void setFearPercentage(Double fearPercentage) {
         this.fearPercentage = fearPercentage;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     // Getters and Setters

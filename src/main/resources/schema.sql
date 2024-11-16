@@ -21,6 +21,7 @@ CREATE TABLE users (
     access_code VARCHAR(10) DEFAULT NULL COMMENT 'Short access code for patients',
     fear_level INT DEFAULT 0 COMMENT 'Fear level',
     coins INT DEFAULT 0 COMMENT 'Coins for rewards',
+    is_doctor BOOLEAN DEFAULT FALSE NOT NULL COMMENT 'Indicates if the user is a doctor',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Account creation date',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last update',
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE

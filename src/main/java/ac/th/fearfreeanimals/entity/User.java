@@ -16,6 +16,9 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+    
+    @Column(name = "is_doctor", nullable = false)
+    private Boolean isDoctor = false;
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
@@ -29,18 +32,11 @@ public class User {
 
     @Column(name = "coins", nullable = false)
     private Integer coins = 0;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Assessments> assessments;
+    
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<GameProgress> gameProgresses;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<RewardRedemption> rewardRedemptions;
 
     public User() {}
 
@@ -106,14 +102,6 @@ public class User {
         this.coins = coins;
     }
 
-    public List<Assessments> getAssessments() {
-        return assessments;
-    }
-
-    public void setAssessments(List<Assessments> assessments) {
-        this.assessments = assessments;
-    }
-
     public List<GameProgress> getGameProgresses() {
         return gameProgresses;
     }
@@ -122,14 +110,12 @@ public class User {
         this.gameProgresses = gameProgresses;
     }
 
-    public List<RewardRedemption> getRewardRedemptions() {
-        return rewardRedemptions;
+    public Boolean getIsDoctor() {
+        return isDoctor;
     }
 
-    public void setRewardRedemptions(List<RewardRedemption> rewardRedemptions) {
-        this.rewardRedemptions = rewardRedemptions;
+    public void setIsDoctor(Boolean isDoctor) {
+        this.isDoctor = isDoctor;
     }
 
-    // Getters and Setters...
-    
 }

@@ -10,47 +10,49 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameProgressService {
 
-    private final GameProgressRepository gameProgressRepository;
-    private final UserRepository userRepository;
+    @Autowired
+    private GameProgressRepository gameProgressRepository;
 
     @Autowired
-    public GameProgressService(GameProgressRepository gameProgressRepository, UserRepository userRepository) {
-        this.gameProgressRepository = gameProgressRepository;
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     public GameProgress updateProgress(Long userId, int currentLevel) {
-        // Find the user by userId
+        // ค้นหาผู้ใช้
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
 
-        // Get the existing game progress or create a new one
+        // ค้นหาความคืบหน้าเกมหรือสร้างใหม่
         GameProgress gameProgress = gameProgressRepository.findByUserId(userId)
-                .orElseGet(() -> {
-                    GameProgress newProgress = new GameProgress();
-                    newProgress.setUser(user);
-                    newProgress.setCurrentLevel(1);  // Default starting level
-                    newProgress.setCompleted(false);  // Set default completed status
-                    return newProgress;
-                });
+                .orElseGet(() -> new GameProgress(user, null)); // null เพราะยังไม่มี Animal Type
 
-        // Update current level
+        // อัปเดตข้อมูล
         gameProgress.setCurrentLevel(currentLevel);
+        gameProgress.setCompleted(currentLevel == 10); // สมมติว่าด่าน 10 คือด่านสุดท้าย
 
-        // If the user reaches level 10, give 1 coin
-        if (currentLevel == 10) {
-            user.setCoins(user.getCoins() + 1);  // Add 1 coin
-        }
-
-        // Save updated game progress and user
-        gameProgressRepository.save(gameProgress);
-        userRepository.save(user);
-
-        return gameProgress;
+        // บันทึกข้อมูล
+        return gameProgressRepository.save(gameProgress);
     }
 
-    public GameProgress getGameProgress(Long userId) {
+    public GameProgress updateGameProgress(Long userId, String description, Integer currentLevel) {
+        // ค้นหาผู้ใช้
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
+
+        // ค้นหาความคืบหน้าเกมหรือสร้างใหม่
+        GameProgress gameProgress = gameProgressRepository.findByUserId(userId)
+                .orElseGet(() -> new GameProgress(user, null)); // null เพราะยังไม่มี Animal Type
+
+        // อัปเดตข้อมูล
+        gameProgress.setCurrentLevel(currentLevel);
+        gameProgress.setDescription(description); // อัปเดตคำอธิบาย
+        gameProgress.setCompleted(currentLevel == 10); // สมมติว่าด่าน 10 คือด่านสุดท้าย
+
+        // บันทึกข้อมูล
+        return gameProgressRepository.save(gameProgress);
+    }
+
+    public GameProgress getProgress(Long userId) {
         return gameProgressRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Game progress not found for userId " + userId));
+                .orElseThrow(() -> new RuntimeException("Game progress not found for user id " + userId));
     }
 }

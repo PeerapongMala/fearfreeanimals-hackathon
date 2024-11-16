@@ -1,37 +1,43 @@
 package ac.th.fearfreeanimals.controller;
 
+import ac.th.fearfreeanimals.entity.GameProgress;
 import ac.th.fearfreeanimals.entity.User;
-import ac.th.fearfreeanimals.repository.UserRepository;
+import ac.th.fearfreeanimals.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
-@RequestMapping("/doctors")
+@RequestMapping("/doctor")
 public class DoctorController {
 
-    private final UserRepository userRepository;
-
     @Autowired
-    public DoctorController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private DoctorService doctorService;
+
+    /**
+     * Add a new patient
+     */
+    @PostMapping("/add-patient")
+    public ResponseEntity<User> addPatient(@RequestBody User patient) {
+        User createdPatient = doctorService.addPatient(patient);
+        return ResponseEntity.ok(createdPatient);
     }
 
-    // Generate Access Code for Patients
-    @PostMapping("/generateCode/{userId}")
-    public ResponseEntity<String> generateAccessCode(@PathVariable Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        
-        if (!"PATIENT".equals(user.getRole().getName())) {
-            return ResponseEntity.badRequest().body("Access codes can only be generated for patients");
-        }
+    /**
+     * Set animal type for the patient
+     */
+    @PutMapping("/set-animal/{userId}")
+    public ResponseEntity<GameProgress> setAnimalType(@PathVariable Long userId, @RequestParam String animalType) {
+        GameProgress updatedProgress = doctorService.setAnimalType(userId, animalType);
+        return ResponseEntity.ok(updatedProgress);
+    }
 
-        String accessCode = "FFANM" + String.format("%03d", userId);
-        user.setAccessCode(accessCode);
-        userRepository.save(user);
-
-        return ResponseEntity.ok(accessCode);
+    /**
+     * Start the game for the patient
+     */
+    @PostMapping("/start-game/{userId}")
+    public ResponseEntity<GameProgress> startGame(@PathVariable Long userId) {
+        GameProgress startedProgress = doctorService.startGame(userId);
+        return ResponseEntity.ok(startedProgress);
     }
 }

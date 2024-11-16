@@ -1,8 +1,6 @@
 package ac.th.fearfreeanimals.controller;
 import ac.th.fearfreeanimals.service.CoinsService;
 import ac.th.fearfreeanimals.entity.GameProgress;
-import ac.th.fearfreeanimals.repository.GameProgressRepository;
-import ac.th.fearfreeanimals.repository.UserRepository;
 import ac.th.fearfreeanimals.service.GameProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -96,4 +94,12 @@ public ResponseEntity<GameProgress> nextLevel(@PathVariable Long userId) {
     return ResponseEntity.ok(updatedProgress);
 }
 
+    // อัปเดตข้อมูลความคืบหน้าเกม (เฉพาะด่าน)
+    @PutMapping("/{userId}")
+    public ResponseEntity<GameProgress> updateProgress(
+            @PathVariable Long userId,
+            @RequestParam int currentLevel) {
+        GameProgress updatedProgress = gameProgressService.updateProgress(userId, currentLevel);
+        return ResponseEntity.ok(updatedProgress);
+    }
 }
