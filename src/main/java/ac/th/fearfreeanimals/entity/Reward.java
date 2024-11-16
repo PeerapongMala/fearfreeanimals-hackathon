@@ -58,5 +58,10 @@ public class Reward {
         this.coinCost = coinCost;
     }
 
+    public int getRequiredPoints() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRequiredPoints'");
+    }
+
     // Getters and Setters...
 }

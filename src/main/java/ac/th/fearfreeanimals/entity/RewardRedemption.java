@@ -1,32 +1,22 @@
 package ac.th.fearfreeanimals.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+
 
 @Entity
-@Table(name = "reward_redemptions")
 public class RewardRedemption {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   
     private Long id;
-
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "role_id", referencedColumnName = "Id")
     private User user;
+    private Long userId; // ตัวแปรนี้เก็บ ID ของผู้ใช้
+    private Long rewardId;
+    private boolean redeemed;
 
-    @ManyToOne
-    @JoinColumn(name = "reward_id", nullable = false)
-    private Reward reward;
-
-    private LocalDateTime redeemedAt;
-
-    public RewardRedemption() {}
-
-    public RewardRedemption(User user, Reward reward, LocalDateTime redeemedAt) {
-        this.user = user;
-        this.reward = reward;
-        this.redeemedAt = redeemedAt;
-    }
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -44,21 +34,27 @@ public class RewardRedemption {
         this.user = user;
     }
 
-    public Reward getReward() {
-        return reward;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setReward(Reward reward) {
-        this.reward = reward;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public LocalDateTime getRedeemedAt() {
-        return redeemedAt;
+    public Long getRewardId() {
+        return rewardId;
     }
 
-    public void setRedeemedAt(LocalDateTime redeemedAt) {
-        this.redeemedAt = redeemedAt;
+    public void setRewardId(Long rewardId) {
+        this.rewardId = rewardId;
     }
 
-    // Getters and Setters...
+    public boolean isRedeemed() {
+        return redeemed;
+    }
+
+    public void setRedeemed(boolean redeemed) {
+        this.redeemed = redeemed;
+    }
 }
