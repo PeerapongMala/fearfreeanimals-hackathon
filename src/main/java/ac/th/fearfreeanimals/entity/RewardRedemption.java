@@ -6,31 +6,32 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "RewardRedemptions")
+@Table(name = "reward_redemptions")
 public class RewardRedemption {
 
     @Id
-   
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "Id")
-    private User user;
-    private Long userId; // ตัวแปรนี้เก็บ ID ของผู้ใช้
-    private Long rewardId;
-    private boolean redeemed;
 
     @ManyToOne
-    @JoinColumn(name = "reward_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "reward_id", nullable = false) // This is enough to map the reward relationship
     private Reward reward;
 
     @Column(nullable = false)
-    private LocalDateTime redeemedAt;
+    private LocalDateTime redeemedAt = LocalDateTime.now();
+
+    public RewardRedemption() {}
 
     public RewardRedemption(User user, Reward reward) {
         this.user = user;
         this.reward = reward;
-        this.redeemedAt = LocalDateTime.now();}
+    }
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -47,27 +48,19 @@ public class RewardRedemption {
         this.user = user;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Reward getReward() {
+        return reward;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setReward(Reward reward) {
+        this.reward = reward;
     }
 
-    public Long getRewardId() {
-        return rewardId;
+    public LocalDateTime getRedeemedAt() {
+        return redeemedAt;
     }
 
-    public void setRewardId(Long rewardId) {
-        this.rewardId = rewardId;
-    }
-
-    public boolean isRedeemed() {
-        return redeemed;
-    }
-
-    public void setRedeemed(boolean redeemed) {
-        this.redeemed = redeemed;
+    public void setRedeemedAt(LocalDateTime redeemedAt) {
+        this.redeemedAt = redeemedAt;
     }
 }
