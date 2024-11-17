@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -20,6 +20,15 @@ public class UserController {
     public UserController(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+    }
+    @GetMapping("/validate-access-code/{accessCode}")
+    public ResponseEntity<Boolean> validateAccessCode(@PathVariable String accessCode) {
+        boolean exists = userRepository.existsByAccessCode(accessCode);
+        if (exists) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
+        }
     }
 
     // Get all users

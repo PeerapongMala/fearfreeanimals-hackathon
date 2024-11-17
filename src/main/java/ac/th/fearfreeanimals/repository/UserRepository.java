@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     long countByRoleName(String roleName);
 
-
+    boolean existsByAccessCode(String accessCode);
 }
 
