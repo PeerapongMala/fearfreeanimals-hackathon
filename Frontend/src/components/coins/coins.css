@@ -1,0 +1,103 @@
+/* coins.css */
+.rewards-container {
+    font-family: Arial, sans-serif;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f4f8fb;
+}
+
+.header {
+    text-align: center;
+    color: #34495e;
+    margin-bottom: 20px;
+}
+
+.header h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.coin-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.coin-box {
+    background-color: #f28a42;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 150px;
+}
+
+.coin-title {
+    font-size: 1.2em;
+}
+
+.coin-amount {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.rewards-list {
+    text-align: left;
+}
+
+.rewards-list h3 {
+    font-size: 1.5em;
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.reward-item {
+    display: flex;
+    align-items: center;
+    background-color: #14274E;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.reward-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.reward-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.reward-info p {
+    margin: 0;
+    font-size: 1em;
+    color: #ffffff;
+}
+
+.reward-info span {
+    font-size: 0.9em;
+    color: #f28a42;
+}
+
+.exchange-button {
+    background-color: #f28a42;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.exchange-button:hover {
+    background-color: #d8733c;
+}

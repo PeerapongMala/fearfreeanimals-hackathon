@@ -1,0 +1,133 @@
+/* src/components/game/CategoriesPage/CategoriesPage.css */
+
+.categories-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.categories-page h1 {
+    font-size: 2rem;
+    color:#0D3B66;
+    margin-bottom: 20px;
+}
+
+.categories-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: center;
+}
+
+.challenge-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #DD8A6B;
+    color: white;
+    border-radius: 8px;
+    width: 250px;
+    text-align: center;
+
+    background-size: cover;
+    background-position: center;
+}
+.challenge-card h2 {
+    font-size: 1.5rem;
+
+    color: #ffffff;
+}
+.challenge-image {
+    width: 220px;
+    /* Adjust width as needed */
+    height: auto;
+    margin-bottom: 4px;
+    /* Space between image and text */
+    border-radius: 50%;
+    /* Optional: makes the image circular */
+}
+
+.challenge-card p {
+    font-size: 1.1rem;
+
+}
+
+.challenge-card .note {
+    font-size: 0.8rem;
+    margin-top: 10px;
+    color: #ffe8d6;
+}
+.challenge-button {
+    background-color: white;
+    color: #f4a261;
+    border: none;
+    border-radius: 50%;
+    width: 40px; /* Adjust width to fit the icon */
+    height: 40px; /* Make height the same as width for a perfect circle */
+    display: flex; /* Use flexbox to center the icon */
+    align-items: center; /* Vertically center the icon */
+    justify-content: center; /* Horizontally center the icon */
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.challenge-button:hover {
+    background-color: #ffad85;
+    color: white;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+}
+.categories h2{
+    font-size: 24px;
+    color: #226177;
+}
+.category-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(0deg, rgba(179, 216, 216, 1) 0%, rgba(246, 255, 252, 1) 100%);
+    
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+    background-color: #cdeff0;
+
+}
+.category-card:hover h2 {
+    color: #0D3B66;
+}
+.coin-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff9db;
+    color: #f4a261;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.coin-info h2 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.coin-info p {
+    font-size: 1rem;
+}

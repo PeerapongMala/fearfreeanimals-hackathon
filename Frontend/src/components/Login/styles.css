@@ -1,0 +1,50 @@
+
+.login-container{
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    text-align: center;
+    min-height: 100px;
+    margin-top: 30px;
+    margin-right: 20%;
+    margin-left: 32%;
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: #0d3b66;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-buttons {
+    text-align: center; /* จัดปุ่มให้อยู่ตรงกลาง */
+}
+
+
+button:hover {
+    background-color: #226077c0;
+}
+
+.form-group1 {
+    margin-bottom: 15px;
+    text-align: center;
+}

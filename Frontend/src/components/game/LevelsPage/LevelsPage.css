@@ -1,0 +1,46 @@
+.levels-page {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.levels-page h2 {
+    font-size: 2rem;
+    color: #009688;
+    margin-bottom: 30px;
+}
+
+.levels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.level {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.unlocked {
+    background-image: linear-gradient(0deg, rgba(179, 216, 216, 1) 0%, rgba(246, 255, 252, 1) 100%);
+    color: #009688;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.unlocked:hover {
+    transform: translateY(-5px);
+    color: #009688;
+}
+
+.locked {
+    background-color: #bdbdbd;
+    color: #757575;
+}

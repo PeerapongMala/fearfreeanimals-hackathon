@@ -1,0 +1,177 @@
+/*--------head------------*/
+.head {
+  padding: 20px 0;
+  color: #0D3B66;
+}
+
+.logo h1 {
+  font-size: 35px;
+  font-weight: 900;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-icon {
+  width: 35px;
+  height: auto;
+  margin-right: 10px;
+}
+
+.head .icon {
+  margin-left: 10px;
+  z-index: 1;
+}
+
+/*--------head------------*/
+/*--------header------------*/
+header {
+  background-color: #DD8A6B;
+  width: 100%;
+  padding: 0 30px;
+  box-sizing: border-box;
+}
+
+header .nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header li {
+  margin-right: 29px;
+}
+
+header ul {
+  padding: 30px 20px;
+  display: flex;
+}
+
+header ul li a {
+  position: relative;
+  color: #ffffff;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+/* Underline effect on hover and active */
+header ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0;
+  height: 2px;
+  background-image: linear-gradient(0deg, rgba(179, 216, 216, 1) 0%, rgba(246, 255, 252, 1) 100%);
+  transition: width 0.3s ease;
+}
+
+header ul li a:hover::after,
+header ul li a.active::after {
+  width: 100%;
+}
+
+header ul li a.active {
+  color: #ffffff;
+}
+
+.start {
+  background-color: #226177;
+  padding: 30px 70px;
+  color: #ffffff;
+  clip-path: polygon(10% 0%, 100% 0, 100% 100%, 0% 100%);
+  position: relative;
+z-index: 0;
+}
+
+.start:hover {
+  color: #fad1c2;
+}
+
+.toggle {
+  display: none;
+}
+.username-display {
+  position: relative;
+  /* Enable dropdown positioning */
+  cursor: pointer;
+  color: #ffffff;
+  font-weight: bold;
+}
+.username-display:hover {
+  position: relative;
+  cursor: pointer;
+  color: #ffffff;
+  /* Maintain the same color */
+  font-weight: bold;
+  text-decoration: none;
+  /* Explicitly remove underline */
+  border-bottom: none;
+  /* Remove border if it exists */
+  box-shadow: none;
+  /* Remove any shadow under the element */
+}
+
+.username-display .username {
+  display: inline-flex;
+  align-items: center;
+}
+.username-display .username :hover {
+  display: inline-flex;
+  align-items: center;
+  color: #DD8A6B;
+}
+
+.username-display .username i {
+  margin-left: 5px;
+  font-size: 14px;
+}
+/*--------header responsive------------*/
+@media screen and (max-width: 768px) {
+  .start {
+    clip-path: none;
+  }
+
+  header {
+    margin: 0;
+    background-color: #DD8A6B;
+    position: relative;
+  }
+
+  header ul.flexSB {
+    display: none;
+  }
+
+  header ul li {
+    margin-bottom: 20px;
+  }
+
+  .toggle {
+    display: block;
+    background: none;
+    color: #fff;
+    font-size: 30px;
+    position: absolute;
+    right: 0;
+    top: -20px;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    top: 7vh;
+    left: 0;
+    width: 100%;
+    background-color: #DD8A6B;
+  }
+
+  .username-display .dropdown {
+    position: static;
+    /* Ensure dropdown appears inline for mobile */
+    width: 100%;
+  }
+}
